@@ -2,15 +2,16 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/matbot/gin-gorm-bookstore/controllers"
+	"github.com/matbot/gin-gorm-bookstore/models"
 )
 
 func main() {
 	router := gin.Default()
 
-	router.GET("/", func(context *gin.Context) {
-		// gin.H is a type alias for map[string] interface{}{"":""}
-		context.JSON(http.StatusOK, gin.H{"data": "hello world!"})
-	})
+	models.ConnectDatabase()
+
+	router.GET("/books", controllers.FindBooks)
+
 	_ = router.Run()
 }
